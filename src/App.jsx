@@ -21,7 +21,7 @@ const App = () => {
     // Row Dynamic
     for(let row = 0; row < gameState.length; row++) {
       if(gameState[row][0] === gameState[row][1] && gameState[row][1] === gameState[row][2]) {
-        // bg-color color change for row winner
+        // bg-color change for row winner
         setFinisedArrayState([row * 3 + 0, row * 3 + 1, row * 3 + 2]);
         return gameState[row][0]
       }
@@ -29,19 +29,23 @@ const App = () => {
     // Column Dynamic
     for(let col = 0; col < gameState.length; col++) {
       if(gameState[0][col] === gameState[1][col] && gameState[1][col] === gameState[2][col]) {
-        // bg-color color change for column winner
+        // bg-color change for column winner
         setFinisedArrayState([0 * 3 + col, 1 * 3 + col, 2 * 3 + col]);
         return gameState[0][col]
       }
     }
 
     // Diagonal left Winner
-    if(gameState[0][0] === gameState[1][1] && gameState[1][1] === gameState[2][2]){
+    if(gameState[0][0] === gameState[1][1] && gameState[1][1] === gameState[2][2]) {
+      // bg-color change for d-left winner
+      setFinisedArrayState([0, 4, 8]);
       return gameState[0][0];
     }
 
     // Diagonal Right Winner
-    if(gameState[0][2] === gameState[1][1] && gameState[1][1] === gameState[2][0]){
+    if(gameState[0][2] === gameState[1][1] && gameState[1][1] === gameState[2][0]) {
+      // bg-color change for d-right winner
+      setFinisedArrayState([2, 4, 6]);
       return gameState[0][2];
     }
 
