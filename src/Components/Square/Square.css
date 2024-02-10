@@ -5,3 +5,7 @@
     background-color: #4b495f;
     cursor: pointer;
 }
+
+.not-allowed{
+    cursor: not-allowed !important;
+}

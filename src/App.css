@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5vh;
   flex-direction: column;
+  margin-top: 5vh;
 }
 
 .bg-style{
@@ -22,6 +22,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 10px;
   column-gap: 10px;
+  margin-bottom: 3vh;
 }
 
 .move-detection{
@@ -58,3 +59,7 @@
   border-bottom-right-radius: 50px;
 }
 
+.winner-msg{
+  font-size: 2rem;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Square from "./Components/Square/Square";
 
@@ -15,6 +15,28 @@ const App = () => {
   const [currentPlayer, setCurrentPlayer] = useState('circle');
   const [finishedState, setFinisedState] = useState(false);
 
+  const checkWinner = () => {
+    // Row Dynamic
+    for(let row = 0; row < gameState.length; row++) {
+      if(gameState[row][0] === gameState[row][1] && gameState[row][1] === gameState[row][2]) {
+        return gameState[row][0]
+      }
+    }
+    // Column Dynamic
+    for(let col = 0; col < gameState.length; col++) {
+      if(gameState[0][col] === gameState[1][col] && gameState[1][col] === gameState[2][col]) {
+        return gameState[0][col]
+      }
+    }
+  }
+
+  useEffect(() => {
+    const winner = checkWinner();
+    if(winner === 'circle' || winner === 'cross'){
+      setFinisedState(winner);
+    }
+  }, [gameState]);
+
   return (
     <div className="main-div">
       <div className="move-detection">
@@ -26,19 +48,22 @@ const App = () => {
         <h1 className="game-heading bg-style">Tic Tac Toe</h1>
 
         <div className="square-wrapper">
-          {gameState.map((arr) =>
-            arr.map((e, index) => {
+          {gameState.map((arr, rowIndex) =>
+            arr.map((e, colIndex) => {
               return <Square
-                setFinisedState = {setFinisedState}
                 finishedState = {finishedState}
                 currentPlayer = {currentPlayer}
                 setCurrentPlayer = {setCurrentPlayer}
                 setGameState = {setGameState}
-                id = {index} 
-                key = {e} />;
+                id = {rowIndex * 3 + colIndex} 
+                key = {rowIndex * 3 + colIndex} />;
             })
           )}
         </div>
+        { finishedState && (
+          <h3 className="winner-msg">{finishedState} Won 🎉</h3>
+        )}
+        
       </div>
     </div>
   );
