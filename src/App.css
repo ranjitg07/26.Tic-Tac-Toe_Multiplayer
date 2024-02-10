@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 5vh;
+  flex-direction: column;
 }
 
 .bg-style{
@@ -28,12 +29,32 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3vh;
+  width: 400px;
 }
 
-.left, .right{
+.left{
   height: 40px;
-  width: 120px;
-  background-color: red;
+  width: 140px;
+  background-color: #4b495f;
+  padding-top: 8px;
+  padding-bottom: 35px;
+  text-align: center;
+  font-size: 1.3rem;
+  overflow: hidden;
   border-bottom-left-radius: 50px;
   border-top-right-radius: 50px;
 }
+
+.right{
+  height: 40px;
+  width: 140px;
+  background-color: #4b495f;
+  padding-top: 8px;
+  padding-bottom: 35px;
+  text-align: center;
+  font-size: 1.3rem;
+  overflow: hidden;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
