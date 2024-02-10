@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Honk&family=Press+Start+2P&family=Rowdies:wght@700&display=swap');
+
 .main-div{
   display: flex;
   justify-content: center;
@@ -10,6 +12,37 @@
   background-color: #4b495f;
 }
 
+/* Play Online Button Style */
+.play-btn{
+  margin-top: 35vh;
+  height: 70px;
+  width: 350px;
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: 'Honk', system-ui;
+  /* font-family: 'Rowdies', sans-serif; */
+  cursor: pointer;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.play-btn:hover {
+  background-position: 100% 0;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.play-btn.color1 {
+  background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+/* ------------------------------------------------------------------- */
 .game-heading{
   padding: 10px 80px;
   border-radius: 5px;
@@ -63,3 +96,4 @@
   font-size: 2rem;
   text-align: center;
 }
+
