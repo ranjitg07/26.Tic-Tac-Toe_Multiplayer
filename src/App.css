@@ -59,7 +59,7 @@
   border-bottom-right-radius: 50px;
 }
 
-.winner-msg{
+.winner-msg, .draw-msg{
   font-size: 2rem;
   text-align: center;
 }

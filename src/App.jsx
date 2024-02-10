@@ -39,12 +39,18 @@ const App = () => {
       return gameState[0][2];
     }
 
+    const isDraw = gameState.flat().every(e => {
+      if(e === 'circle' || e === 'cross') return true;
+    })
+
+    if(isDraw) return "draw";
+
     return null;
   }
 
   useEffect(() => {
     const winner = checkWinner();
-    if(winner === 'circle' || winner === 'cross'){
+    if(winner){
       setFinisedState(winner);
     }
   }, [gameState]);
@@ -72,8 +78,15 @@ const App = () => {
             })
           )}
         </div>
-        { finishedState && (
+
+        {/* Winner Message */}
+        { finishedState && finishedState !== "draw" && (
           <h3 className="winner-msg">{finishedState} Won 🎉</h3>
+        )}
+
+        {/* Draw Message */}
+        { finishedState && finishedState === "draw" && (
+          <h3 className="draw-msg">It's a Draw 🤔</h3>
         )}
         
       </div>
