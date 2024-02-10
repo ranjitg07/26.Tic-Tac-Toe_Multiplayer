@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 .bg-style{
@@ -12,4 +12,28 @@
 .game-heading{
   padding: 10px 80px;
   border-radius: 5px;
+  font-size: 2rem;
+  margin-bottom: 4vh;
+}
+
+.square-wrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+.move-detection{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+
+.left, .right{
+  height: 40px;
+  width: 120px;
+  background-color: red;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 50px;
 }
