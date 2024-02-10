@@ -28,6 +28,18 @@ const App = () => {
         return gameState[0][col]
       }
     }
+
+    // Diagonal left Winner
+    if(gameState[0][0] === gameState[1][1] && gameState[1][1] === gameState[2][2]){
+      return gameState[0][0];
+    }
+
+    // Diagonal Right Winner
+    if(gameState[0][2] === gameState[1][1] && gameState[1][1] === gameState[2][0]){
+      return gameState[0][2];
+    }
+
+    return null;
   }
 
   useEffect(() => {
