@@ -29,6 +29,8 @@ const App = () => {
     // Column Dynamic
     for(let col = 0; col < gameState.length; col++) {
       if(gameState[0][col] === gameState[1][col] && gameState[1][col] === gameState[2][col]) {
+        // bg-color color change for column winner
+        setFinisedArrayState([0 * 3 + col, 1 * 3 + col, 2 * 3 + col]);
         return gameState[0][col]
       }
     }
