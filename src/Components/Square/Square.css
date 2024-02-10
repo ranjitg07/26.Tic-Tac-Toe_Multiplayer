@@ -9,3 +9,11 @@
 .not-allowed{
     cursor: not-allowed !important;
 }
+
+.circle-won{
+    background-color: #DD7F9F;
+}
+
+.cross-won{
+    background-color: #3fa7f0;
+}

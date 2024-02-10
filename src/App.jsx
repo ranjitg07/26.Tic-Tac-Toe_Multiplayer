@@ -14,11 +14,15 @@ const App = () => {
   const [gameState, setGameState] = useState(renderFrom);
   const [currentPlayer, setCurrentPlayer] = useState('circle');
   const [finishedState, setFinisedState] = useState(false);
+  const [finishedArrayState, setFinisedArrayState] = useState([]);
+
 
   const checkWinner = () => {
     // Row Dynamic
     for(let row = 0; row < gameState.length; row++) {
       if(gameState[row][0] === gameState[row][1] && gameState[row][1] === gameState[row][2]) {
+        // bg-color color change for row winner
+        setFinisedArrayState([row * 3 + 0, row * 3 + 1, row * 3 + 2]);
         return gameState[row][0]
       }
     }
@@ -69,6 +73,7 @@ const App = () => {
           {gameState.map((arr, rowIndex) =>
             arr.map((e, colIndex) => {
               return <Square
+                finishedArrayState = {finishedArrayState}
                 finishedState = {finishedState}
                 currentPlayer = {currentPlayer}
                 setCurrentPlayer = {setCurrentPlayer}
