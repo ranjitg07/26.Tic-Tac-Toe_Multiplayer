@@ -12,9 +12,22 @@
   background-color: #4b495f;
 }
 
+.tic-logo{
+  width: 250px;
+  margin-top: 5vh;
+}
+
+.heading1{
+  /* margin-top: 30vh; */
+  margin-bottom: 5vh;
+  font-family: 'Press Start 2P', system-ui;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 /* Play Online Button Style */
 .play-btn{
-  margin-top: 35vh;
+  margin-top: vh;
   height: 70px;
   width: 350px;
   font-size: 3rem;

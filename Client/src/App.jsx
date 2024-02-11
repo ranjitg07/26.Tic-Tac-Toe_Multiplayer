@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Square from "./Components/Square/Square";
-
+import Tic from './assets/t-logo.png'
 
 const renderFrom = [
   [1, 2, 3],
@@ -69,6 +69,8 @@ const App = () => {
   // Play Online Screen
   if(!playOnline){
     return <div className="main-div">
+      <img className="tic-logo" src={Tic} alt="" />
+      <h1 className="heading1">Tic Tac Toe Multiplayer Game</h1>
       <button className="play-btn color1">Play Online</button>
     </div>
   }
