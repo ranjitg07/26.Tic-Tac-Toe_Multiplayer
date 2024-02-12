@@ -3,7 +3,7 @@ import "./App.css";
 import Square from "./Components/Square/Square";
 import Tic from './assets/t-logo.png';
 import { io } from 'socket.io-client';
-
+import Swal from 'sweetalert2';
 
 const socket = io ("http://localhost:3000",{
   autoConnect: true
@@ -23,6 +23,7 @@ const App = () => {
   const [finishedArrayState, setFinisedArrayState] = useState([]);
   const [playOnline, setPlayOnline] = useState(false);
   const [socket, setSocket] = useState(null);
+  const [playerName, setPlayerName] = useState('');
 
 
   const checkWinner = () => {
@@ -73,11 +74,33 @@ const App = () => {
     }
   }, [gameState]);
 
+  const takePlayerName = async () => {
+    const result = await Swal.fire({
+      title: "Enter your name",
+      input: "text",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write your name to enter the game!";
+        }
+      }
+    });
+    return result;
+  }
+
   socket?.on("connect", function () {
     setPlayOnline(true);
   });
 
-  function playOnlineClick() {
+  async function playOnlineClick() {
+    const result = await takePlayerName();
+    if(!result.isConfirmed){
+      return;
+    }
+
+    const username = result.value;
+    setPlayOnline(username);
+
     const newSocket = io ("http://localhost:3000",{
     autoConnect: true
     });
