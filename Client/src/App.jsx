@@ -73,6 +73,10 @@ const App = () => {
     }
   }, [gameState]);
 
+  socket?.on("connect", function () {
+    setPlayOnline(true);
+  });
+
   function playOnlineClick() {
     const newSocket = io ("http://localhost:3000",{
     autoConnect: true
