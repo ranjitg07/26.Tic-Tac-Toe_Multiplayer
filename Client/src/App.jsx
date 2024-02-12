@@ -22,6 +22,7 @@ const App = () => {
   const [finishedState, setFinisedState] = useState(false);
   const [finishedArrayState, setFinisedArrayState] = useState([]);
   const [playOnline, setPlayOnline] = useState(false);
+  const [socket, setSocket] = useState(null);
 
 
   const checkWinner = () => {
@@ -72,12 +73,19 @@ const App = () => {
     }
   }, [gameState]);
 
+  function playOnlineClick() {
+    const newSocket = io ("http://localhost:3000",{
+    autoConnect: true
+    });
+    setSocket(newSocket);
+  }
+
   // Play Online Screen
   if(!playOnline){
     return <div className="main-div">
       <img className="tic-logo" src={Tic} alt="" />
       <h1 className="heading1">Tic Tac Toe Multiplayer Game</h1>
-      <button className="play-btn color1">Play Online</button>
+      <button onClick={playOnlineClick} className="play-btn color1">Play Online</button>
     </div>
   }
   //--------------------
