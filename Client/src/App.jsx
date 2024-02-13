@@ -6,10 +6,6 @@ import Loader from '../src/assets/loader1.gif'
 import { io } from 'socket.io-client';
 import Swal from 'sweetalert2';
 
-const socket = io ("http://localhost:3000",{
-  autoConnect: true
-});
-
 const renderFrom = [
   [1, 2, 3],
   [4, 5, 6],
@@ -24,8 +20,9 @@ const App = () => {
   const [finishedArrayState, setFinisedArrayState] = useState([]);
   const [playOnline, setPlayOnline] = useState(false);
   const [socket, setSocket] = useState(null);
-  const [playerName, setPlayerName] = useState('');
+  const [playerName, setPlayerName] = useState("");
   const [opponentName, setOpponentName] = useState(null);
+  const [playingAs, setPlayingAs] = useState(null);
 
 
   const checkWinner = () => {
@@ -90,8 +87,29 @@ const App = () => {
     return result;
   }
 
+  socket?.on("playerMoveFromServer", (data) => {
+    const id = data.state.id;
+    setGameState((prevState) => {
+      let newState = [...prevState];
+        const rowIndex = Math.floor(id / 3);
+        const colIndex = id % 3;
+        newState[rowIndex][colIndex] = data.state.sign;
+        return newState;
+    });
+    setCurrentPlayer(data.state.sign === "circle" ? "cross" : "circle");
+  });
+
   socket?.on("connect", function () {
-    setPlayerName(true);
+    setPlayOnline(true);
+  });
+
+  socket?.on("OpponentNotFound", function () {
+    setOpponentName(false);
+  });
+
+  socket?.on("OpponentFound", function (data) {
+    setPlayingAs(data.playingAs);
+    setOpponentName(data.opponentName);
   });
 
   
@@ -102,7 +120,7 @@ const App = () => {
     }
     
     const username = result.value;
-    setPlayOnline(username);
+    setPlayerName(username);
     
     const newSocket = io ("http://localhost:3000",{
       autoConnect: true
@@ -138,9 +156,9 @@ const App = () => {
   return (
     <div className="main-div">
       <div className="move-detection">
-          <div className="left">Yoursel</div>
+          <div className={`left ${currentPlayer === playingAs ? "current-move-" + currentPlayer : ''}`}>{playerName}</div>
           <div className="vs">VS</div>
-          <div className="right">Opponent</div>
+          <div className={`right ${currentPlayer !== playingAs ? "current-move-" + currentPlayer : ''}`}>{opponentName}</div>
         </div>
       <div>
         <h1 className="game-heading bg-style">Tic Tac Toe</h1>
@@ -149,6 +167,9 @@ const App = () => {
           {gameState.map((arr, rowIndex) =>
             arr.map((e, colIndex) => {
               return <Square
+                socket = { socket }
+                playingAs = {playingAs }
+                gameState = { gameState }
                 finishedArrayState = {finishedArrayState}
                 finishedState = {finishedState}
                 currentPlayer = {currentPlayer}
@@ -156,21 +177,26 @@ const App = () => {
                 setGameState = {setGameState}
                 id = {rowIndex * 3 + colIndex} 
                 key = {rowIndex * 3 + colIndex} />;
+                currentElement = {e}
             })
           )}
         </div>
 
         {/* Winner Message */}
         { finishedState && finishedState !== "draw" && (
-          <h3 className="winner-msg">{finishedState} Won 🎉</h3>
+          <h3 className="winner-msg">
+            {finishedState === playingAs ? "You " : finishedState} Won 🎉
+            </h3>
         )}
 
         {/* Draw Message */}
         { finishedState && finishedState === "draw" && (
           <h3 className="draw-msg">It's a Draw 🤔</h3>
-        )}
-        
+        )} 
       </div>
+        { !finishedState && opponentName && (
+          <h2>You are playing against {opponentName}🫣👀</h2>
+        )}
     </div>
   );
 };

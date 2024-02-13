@@ -14,16 +14,50 @@ io.on("connection", (socket) => {
   };
 
   socket.on("request_to_play", (data) => {
-    const currentUser = allUsers[socket.id]
+    const currentUser = allUsers[socket.id];
     currentUser.playerName = data.playerName;
     
+    let opponentPlayer;
+
+    for (const key in allUsers) {
+      const user = allUsers[key];
+      if (user.online && !user.playing && socket.id !== key) {
+        opponentPlayer = user;
+        break;
+      }
+    }
+
+    if (opponentPlayer) {
+      currentUser.socket.emit("OpponentFound", {
+        opponentName: opponentPlayer.playerName, 
+        playingAs:"circle",
+      });
+
+      opponentPlayer.socket.emit("OpponentFound", {
+        opponentName: currentUser.playerName,
+        playingAs:"cross",
+      });
+
+      currentUser.socket.on("playerMoveFromClient", (data) => {
+        opponentPlayer.socket.emit("playerMoveFromServer", {
+          ...data
+        });
+      });
+
+      opponentPlayer.socket.on("playerMoveFromClient", (data) => {
+        currentUser.socket.emit("playerMoveFromServer", {
+          ...data
+        });
+      });
+
+    } else {
+      currentUser.socket.emit("OpponentNotFound");
+    }
   });
 
   socket.on("disconnect", function () {
-    allUsers[socket.id] = {
-      socket: { ...socket, online: false },
-      online: true,
-    };
+    const currentUser = allUsers[socket.id];
+    currentUser.online = false;
   });
 });
 
