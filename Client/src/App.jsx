@@ -87,6 +87,12 @@ const App = () => {
     return result;
   }
 
+  socket?.on("opponentLeftMatch", () =>{
+    alert("Opponent Left The Match")
+    setFinisedState = ("opponentLeftMatch");
+
+  })
+
   socket?.on("playerMoveFromServer", (data) => {
     const id = data.state.id;
     setGameState((prevState) => {
@@ -183,19 +189,22 @@ const App = () => {
         </div>
 
         {/* Winner Message */}
-        { finishedState && finishedState !== "draw" && (
+        { finishedState && finishedState !== 'opponentLeftMatch' && finishedState !== "draw" && (
           <h3 className="winner-msg">
             {finishedState === playingAs ? "You " : finishedState} Won 🎉
             </h3>
         )}
 
         {/* Draw Message */}
-        { finishedState && finishedState === "draw" && (
+        { finishedState && finishedState !== 'opponentLeftMatch' && finishedState === "draw" && (
           <h3 className="draw-msg">It's a Draw 🤔</h3>
         )} 
       </div>
         { !finishedState && opponentName && (
-          <h2>You are playing against {opponentName}🫣👀</h2>
+          <h2>You are playing against {opponentName}👀</h2>
+        )}
+        { finishedState && finishedState === 'opponentLeftMatch' && (
+          <h2>You won, Opponent has left</h2>
         )}
     </div>
   );
