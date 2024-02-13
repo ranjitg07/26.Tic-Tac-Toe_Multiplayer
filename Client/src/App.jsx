@@ -13,7 +13,6 @@ const renderFrom = [
 ];
 
 const App = () => {
-
   const [gameState, setGameState] = useState(renderFrom);
   const [currentPlayer, setCurrentPlayer] = useState('circle');
   const [finishedState, setFinisedState] = useState(false);
@@ -87,11 +86,9 @@ const App = () => {
     return result;
   }
 
-  socket?.on("opponentLeftMatch", () =>{
-    alert("Opponent Left The Match")
+  socket?.on("opponentLeftMatch", () => {
     setFinisedState = ("opponentLeftMatch");
-
-  })
+  });
 
   socket?.on("playerMoveFromServer", (data) => {
     const id = data.state.id;
@@ -118,9 +115,9 @@ const App = () => {
     setOpponentName(data.opponentName);
   });
 
-  
   async function playOnlineClick() {
     const result = await takePlayerName();
+
     if(!result.isConfirmed){
       return;
     }
@@ -128,12 +125,13 @@ const App = () => {
     const username = result.value;
     setPlayerName(username);
     
-    const newSocket = io ("http://localhost:3000",{
-      autoConnect: true
+    const newSocket = io("http://localhost:3000", {
+      autoConnect: true,
     });
+
     newSocket?.emit("request_to_play", {
       playerName: username,
-    })
+    });
     
     setSocket(newSocket);
   }
@@ -162,17 +160,16 @@ const App = () => {
   return (
     <div className="main-div">
       <div className="move-detection">
-          <div className={`left ${currentPlayer === playingAs ? "current-move-" + currentPlayer : ''}`}>{playerName}</div>
+          <div className={`left ${currentPlayer === playingAs ? "current-move-" + currentPlayer : ""}`}>{playerName}</div>
           <div className="vs">VS</div>
-          <div className={`right ${currentPlayer !== playingAs ? "current-move-" + currentPlayer : ''}`}>{opponentName}</div>
+          <div className={`right ${currentPlayer !== playingAs ? "current-move-" + currentPlayer : ""}`}>{opponentName}</div>
         </div>
       <div>
         <h1 className="game-heading bg-style">Tic Tac Toe</h1>
-
         <div className="square-wrapper">
           {gameState.map((arr, rowIndex) =>
             arr.map((e, colIndex) => {
-              return <Square
+              return (<Square
                 socket = { socket }
                 playingAs = {playingAs }
                 gameState = { gameState }
@@ -182,8 +179,10 @@ const App = () => {
                 setCurrentPlayer = {setCurrentPlayer}
                 setGameState = {setGameState}
                 id = {rowIndex * 3 + colIndex} 
-                key = {rowIndex * 3 + colIndex} />;
+                key = {rowIndex * 3 + colIndex}
                 currentElement = {e}
+                />
+              );
             })
           )}
         </div>

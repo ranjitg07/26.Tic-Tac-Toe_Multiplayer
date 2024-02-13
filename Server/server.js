@@ -17,7 +17,7 @@ io.on("connection", (socket) => {
   socket.on("request_to_play", (data) => {
     const currentUser = allUsers[socket.id];
     currentUser.playerName = data.playerName;
-    
+
     let opponentPlayer;
 
     for (const key in allUsers) {
@@ -31,30 +31,30 @@ io.on("connection", (socket) => {
     if (opponentPlayer) {
       allRooms.push({
         player1: opponentPlayer,
-        player2: currentUser
-      })
+        player2: currentUser,
+      });
+
       currentUser.socket.emit("OpponentFound", {
-        opponentName: opponentPlayer.playerName, 
-        playingAs:"circle",
+        opponentName: opponentPlayer.playerName,
+        playingAs: "circle",
       });
 
       opponentPlayer.socket.emit("OpponentFound", {
         opponentName: currentUser.playerName,
-        playingAs:"cross",
+        playingAs: "cross",
       });
 
       currentUser.socket.on("playerMoveFromClient", (data) => {
         opponentPlayer.socket.emit("playerMoveFromServer", {
-          ...data
+          ...data,
         });
       });
 
       opponentPlayer.socket.on("playerMoveFromClient", (data) => {
         currentUser.socket.emit("playerMoveFromServer", {
-          ...data
+          ...data,
         });
       });
-
     } else {
       currentUser.socket.emit("OpponentNotFound");
     }
@@ -66,17 +66,17 @@ io.on("connection", (socket) => {
     currentUser.playing = false;
 
     for (let index = 0; index < allRooms.length; index++) {
-      const {player1, player2} = allRooms[index];
-      if(player1.socket.id === socket.id){
-        player2.socket.emit("opponentLeftMatch") 
+      const { player1, player2 } = allRooms[index];
+
+      if (player1.socket.id === socket.id) {
+        player2.socket.emit("opponentLeftMatch");
         break;
       }
-      
-      if(player2.socket.id === socket.id){
-        player1.socket.emit("opponentLeftMatch") 
+
+      if (player2.socket.id === socket.id) {
+        player1.socket.emit("opponentLeftMatch");
         break;
       }
-      
     }
   });
 });

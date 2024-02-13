@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import PropTypes from "prop-types";
 import "./Square.css";
 
 const circleSvg = (
@@ -111,14 +110,5 @@ const Square = ({
     </div>
   );
 };
-
-// Square.propTypes = {
-//   setGameState: PropTypes.func.isRequired,
-//   id: PropTypes.number.isRequired,
-//   currentPlayer: PropTypes.string.isRequired,
-//   setCurrentPlayer: PropTypes.func.isRequired,
-//   finishedState: PropTypes.func.isRequired,
-//   setFinishedState: PropTypes.func.isRequired,
-// };
 
 export default Square;
