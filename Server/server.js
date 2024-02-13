@@ -8,22 +8,22 @@ const io = new Server(httpServer, {
 const allUsers = [];
 
 io.on("connection", (socket) => {
-  allUsers.push({
+  allUsers[socket.id] = {
     socket: socket,
     online: true,
-  });
+  };
 
   socket.on("request_to_play", (data) => {
-    console.log(data);
-  })
+    const currentUser = allUsers[socket.id]
+    currentUser.playerName = data.playerName;
+    
+  });
 
   socket.on("disconnect", function () {
-    for (let index = 0; index < allUsers.length; index++) {
-      const user = allUsers[index];
-      if (user.id === socket.id) {
-        user.online = false;
-      }
-    }
+    allUsers[socket.id] = {
+      socket: { ...socket, online: false },
+      online: true,
+    };
   });
 });
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Square from "./Components/Square/Square";
 import Tic from './assets/t-logo.png';
+import Loader from '../src/assets/loader1.gif'
 import { io } from 'socket.io-client';
 import Swal from 'sweetalert2';
 
@@ -24,6 +25,7 @@ const App = () => {
   const [playOnline, setPlayOnline] = useState(false);
   const [socket, setSocket] = useState(null);
   const [playerName, setPlayerName] = useState('');
+  const [opponentName, setOpponentName] = useState(null);
 
 
   const checkWinner = () => {
@@ -89,7 +91,7 @@ const App = () => {
   }
 
   socket?.on("connect", function () {
-    setPlayOnline(true);
+    setPlayerName(true);
   });
 
   
@@ -114,13 +116,24 @@ const App = () => {
 
   // Play Online Screen
   if(!playOnline){
-    return <div className="main-div">
-      <img className="tic-logo" src={Tic} alt="" />
+    return ( <div className="main-div">
+      <img className="tic-logo" src={Tic} alt="Tic-Tac-Toe Logo" />
       <h1 className="heading1">Tic Tac Toe Multiplayer Game</h1>
       <button onClick={playOnlineClick} className="play-btn color1">Play Online</button>
     </div>
+    );
   }
   //--------------------
+
+  if (playOnline && !opponentName) {
+    return (
+      <div className="waiting">
+        <p>Waiting for opponent ...</p>
+        <img src={Loader} className="loading-gif" allowFullScreen></img>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="main-div">

@@ -56,6 +56,22 @@
   box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
 }
 /* ------------------------------------------------------------------- */
+
+.waiting{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 3rem;
+}
+
+.loading-gif{
+  /* background-color: #1f1f2f; */
+  border: none;
+  width: 100px;
+
+}
+
 .game-heading{
   padding: 10px 80px;
   border-radius: 5px;
