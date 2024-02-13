@@ -12,6 +12,11 @@ io.on("connection", (socket) => {
     socket: socket,
     online: true,
   });
+
+  socket.on("request_to_play", (data) => {
+    console.log(data);
+  })
+
   socket.on("disconnect", function () {
     for (let index = 0; index < allUsers.length; index++) {
       const user = allUsers[index];

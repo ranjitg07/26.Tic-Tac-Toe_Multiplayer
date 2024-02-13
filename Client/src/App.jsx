@@ -92,18 +92,23 @@ const App = () => {
     setPlayOnline(true);
   });
 
+  
   async function playOnlineClick() {
     const result = await takePlayerName();
     if(!result.isConfirmed){
       return;
     }
-
+    
     const username = result.value;
     setPlayOnline(username);
-
+    
     const newSocket = io ("http://localhost:3000",{
-    autoConnect: true
+      autoConnect: true
     });
+    newSocket?.emit("request_to_play", {
+      playerName: username,
+    })
+    
     setSocket(newSocket);
   }
 
