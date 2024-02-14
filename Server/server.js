@@ -5,21 +5,25 @@ const io = new Server(httpServer, {
   cors: "http://localhost:5173/",
 });
 
+// Define variables to store users and rooms
 const allUsers = {};
 const allRooms = [];
 
+// Event listener for incoming socket connections
 io.on("connection", (socket) => {
   allUsers[socket.id] = {
     socket: socket,
     online: true,
   };
 
+  // Event listener for the "request_to_play" event
   socket.on("request_to_play", (data) => {
     const currentUser = allUsers[socket.id];
     currentUser.playerName = data.playerName;
 
     let opponentPlayer;
 
+    // Find an opponent player to start the game
     for (const key in allUsers) {
       const user = allUsers[key];
       if (user.online && !user.playing && socket.id !== key) {
@@ -28,12 +32,14 @@ io.on("connection", (socket) => {
       }
     }
 
+    // Create a new room and add players to it
     if (opponentPlayer) {
       allRooms.push({
         player1: opponentPlayer,
         player2: currentUser,
       });
 
+       // Notify players that an opponent is found and assign roles
       currentUser.socket.emit("OpponentFound", {
         opponentName: opponentPlayer.playerName,
         playingAs: "circle",
@@ -44,6 +50,7 @@ io.on("connection", (socket) => {
         playingAs: "cross",
       });
 
+      // Event listeners for handling player moves
       currentUser.socket.on("playerMoveFromClient", (data) => {
         opponentPlayer.socket.emit("playerMoveFromServer", {
           ...data,
@@ -60,11 +67,13 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Event listener for handling disconnections
   socket.on("disconnect", function () {
     const currentUser = allUsers[socket.id];
     currentUser.online = false;
     currentUser.playing = false;
 
+    // Notify the opponent if a player disconnects
     for (let index = 0; index < allRooms.length; index++) {
       const { player1, player2 } = allRooms[index];
 
