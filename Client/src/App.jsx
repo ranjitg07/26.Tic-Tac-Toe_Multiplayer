@@ -190,7 +190,7 @@ const App = () => {
         {/* Winner Message */}
         { finishedState && finishedState !== 'opponentLeftMatch' && finishedState !== "draw" && (
           <h3 className="winner-msg">
-            {finishedState === playingAs ? "You " : finishedState} Won 🎉
+            {finishedState === playingAs ? "You " : opponentName} Won 🎉
             </h3>
         )}
 
