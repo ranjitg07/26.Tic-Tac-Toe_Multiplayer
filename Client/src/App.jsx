@@ -87,7 +87,7 @@ const App = () => {
   }
 
   socket?.on("opponentLeftMatch", () => {
-    setFinisedState = ("opponentLeftMatch");
+    setFinisedState("opponentLeftMatch");
   });
 
   socket?.on("playerMoveFromServer", (data) => {
