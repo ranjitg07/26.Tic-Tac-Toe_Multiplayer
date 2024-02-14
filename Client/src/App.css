@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Honk&family=Press+Start+2P&family=Rowdies:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Honk&family=Press+Start+2P&family=Russo+One&family=Sora:wght@100..800&display=swap');
 
 .main-div{
   display: flex;
@@ -66,10 +66,8 @@
 }
 
 .loading-gif{
-  /* background-color: #1f1f2f; */
   border: none;
   width: 100px;
-
 }
 
 .game-heading{
@@ -126,10 +124,37 @@
   text-align: center;
 }
 
+.playAgainst-msg{
+  font-weight: 100;
+  font-family: "Sora", sans-serif;
+  font-size: 2rem;
+}
+
+.oppopentStyle{
+  color: #ff4cc0;
+  font-weight: 800;
+  background-image: linear-gradient(45deg, #ff72f6, #4cfff9);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
 .current-move-cross{
   background-color: #3fa7f0 !important; 
 }
 
 .current-move-circle{
   background-color: #dd7f9f !important;
+}
+
+/* -------------- Responsive ------------ */
+@media only screen and (max-width: 800px) {
+  .waiting{
+    font-size: 1.5rem;
+  }
+  
+  .loading-gif{
+    width: 50px;
+  }
 }
