@@ -141,7 +141,7 @@ const App = () => {
     return ( <div className="main-div">
       <img className="tic-logo" src={Tic} alt="Tic-Tac-Toe Logo" />
       <h1 className="heading1">Tic Tac Toe Multiplayer Game</h1>
-      <button onClick={playOnlineClick} className="play-btn color1">Play Online</button>
+      <button onClick={playOnlineClick} className="play-btn color">Play Online</button>
     </div>
     );
   }
@@ -164,7 +164,7 @@ const App = () => {
           <div className="vs">VS</div>
           <div className={`right ${currentPlayer !== playingAs ? "current-move-" + currentPlayer : ""}`}>{opponentName}</div>
         </div>
-      <div>
+      <div className="game-heading-wrapper">
         <h1 className="game-heading bg-style">Tic Tac Toe</h1>
         <div className="square-wrapper">
           {gameState.map((arr, rowIndex) =>
